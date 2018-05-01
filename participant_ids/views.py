@@ -1,4 +1,4 @@
-from django.core.exceptions import ValidationError
+from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -16,5 +16,8 @@ def participant_local_id(request):
     try:
         hash_me = request.GET['study_id'] + request.GET['study_subject_id']
     except KeyError:
-        raise ('Parameters `study_id` and `study_subject_id` are required.')
+        return Response(
+            {'Missing paramter':
+             'Parameters `study_id` and `study_subject_id` are required.'},
+            status=status.HTTP_400_BAD_REQUEST)
     return Response({'miro_id': hash(hash_me)})

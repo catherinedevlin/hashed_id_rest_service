@@ -48,6 +48,7 @@ However, for production use, it should look like
     DJANGO_SETTINGS_MODULE=miro_id_service.settings.production
     MIRO_ID_SALT=make-this-unique-and-do-not-lose-it
     DJANGO_SECRET_KEY=make-this-unique-but-you-can-lose-it-if-you-want
+    DJANGO_ALLOWED_HOSTS='.miro.com'
 
 *Do not lose this `MIRO_ID_SALT`!*  If it is lost or changed, the previously generated Miro IDs *cannot* be
 generated again, and you will need new Miro IDs for each external ID.
