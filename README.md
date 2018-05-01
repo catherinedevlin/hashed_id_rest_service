@@ -24,8 +24,6 @@ Response (actual response depends on `MIRO_ID_SALT` environment variable):
 
 ## Installing
 
-### Using Docker
-
 ### Locally
 
 [Install Python3](http://docs.python-guide.org/en/latest/starting/installation/)
@@ -37,11 +35,21 @@ At a terminal window, `cd` into the directory you have cloned or copied the code
     git clone https://github.com/catherinedevlin/hashed-id-rest-service.git
     cd hashed-id-rest-service
 
-Create a `.env` file in your project directory containing a unique `MIRO_ID_SALT` environment variable:
+The rest of these steps should be performed from that directory.
 
-    MIRO_ID_SALT="Do not use this! Make up your own string!"
+Create a `.env` file in your project directory.  For development use, it can look like
 
-*Do not lose this variable!*  If it is lost or changed, the previously generated Miro IDs *cannot* be
+    DJANGO_SETTINGS_MODULE=miro_id_service.settings.local
+    MIRO_ID_SALT=change-this-before-going-to-production-or-else
+    DJANGO_SECRET_KEY=change-this-before-production-too
+
+However, for production use, it should look like
+
+    DJANGO_SETTINGS_MODULE=miro_id_service.settings.production
+    MIRO_ID_SALT=make-this-unique-and-do-not-lose-it
+    DJANGO_SECRET_KEY=make-this-unique-but-you-can-lose-it-if-you-want
+
+*Do not lose this `MIRO_ID_SALT`!*  If it is lost or changed, the previously generated Miro IDs *cannot* be
 generated again, and you will need new Miro IDs for each external ID.
 
 Install Python and Pipenv on your machine.  [Pipenv installation instructions]()
@@ -50,7 +58,6 @@ Next, run
 
     pipenv install
     pipenv shell
-    cd miro_id_service
     python manage.py runserver
 
 ## Running the test suite
@@ -58,6 +65,5 @@ Next, run
 Using the terminal window, from the directory you have cloned or copied the code into,
 
     pipenv shell
-    cd miro_id_service
     py.test
 
