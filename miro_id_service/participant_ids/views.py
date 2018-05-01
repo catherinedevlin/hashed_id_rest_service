@@ -10,4 +10,4 @@ def participant_local_id(request):
     `request` should contain two parameters, `study_id` and `study_participant_id`.
     """
 
-    return Response({})
+    return Response({'miro_id': 'abcdef123456789'})
