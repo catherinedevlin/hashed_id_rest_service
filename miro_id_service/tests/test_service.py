@@ -1,5 +1,7 @@
 import re
 
+from hypothesis import given
+from hypothesis.strategies import text
 from rest_framework import status
 from rest_framework.test import APIClient
 
@@ -13,8 +15,8 @@ STUDY_SUBJECT_ID = 'PA65000'
 def test_service_functions():
     '''Verify that service exists and returns a response.'''
 
-    resp = client.post('/', {'study_id': STUDY_ID,
-                             'study_subject_id': STUDY_SUBJECT_ID})
+    resp = client.get('/', {'study_id': STUDY_ID,
+                            'study_subject_id': STUDY_SUBJECT_ID})
     assert resp.status_code == status.HTTP_200_OK
 
     resp = client.get('/', {'study_id': STUDY_ID,
@@ -99,4 +101,15 @@ def test_result_varies_by_inputs():
 
     assert len(results) == 20
 
-    assert len(results) == 1
+
+@given(text(), text())
+def property_based_test(study_id, study_subject_id):
+    '''Uses Hypothesis library to verify that a variety of nasty edge cases do not crash server.
+
+    Hypothesis: https://hypothesis.readthedocs.io/'''
+
+    resp = client.get('/', {'study_id': study_id,
+                            'study_subject_id': study_subject_id})
+    miro_id = resp.data.get('miro_id')
+    assert miro_id
+    assert miro_id != study_id + study_subject_id
