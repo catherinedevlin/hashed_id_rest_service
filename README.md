@@ -52,8 +52,6 @@ However, for production use, it should look like
 *Do not lose this `MIRO_ID_SALT`!*  If it is lost or changed, the previously generated Miro IDs *cannot* be
 generated again, and you will need new Miro IDs for each external ID.
 
-Install Python and Pipenv on your machine.  [Pipenv installation instructions]()
-
 Next, run
 
     pipenv install
